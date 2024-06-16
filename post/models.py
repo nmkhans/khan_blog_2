@@ -10,3 +10,6 @@ class Post(models.Model):
   # one post has many categories and one category has many post (many to many relation)
   author = models.ForeignKey(Author, on_delete = models.CASCADE)
   # one author has many post but a post has one author (one to many relation)
+
+  def __str__(self):
+    return f'Title: {self.title}'
