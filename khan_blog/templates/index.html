@@ -22,7 +22,9 @@
                 <button class="btn btn-warning">
                   <a class="nav-link" href="{% url 'edit-post' item.id %}">Edit</a>
                 </button>
-                <button class="btn btn-danger">Delete</button>
+                <button class="btn btn-danger">
+                  <a class="nav-link" href="{% url 'delete-post' item.id %}">Delete</a>
+                </button>
               </div>
             </div>
           </div>

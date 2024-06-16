@@ -26,3 +26,8 @@ def edit_post(req, id):
     form = PostForm(instance = post)
 
   return render(req, 'posts/add_post.html', {'form': form})
+
+def delete_post(req, id):
+  Post.objects.get(pk = id).delete()
+
+  return redirect('home')
