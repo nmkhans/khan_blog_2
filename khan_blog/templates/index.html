@@ -5,6 +5,29 @@
 
 {% block maincontent %} 
   <section class="container py-5">
-    hi
+    <div class="row blog_posts_content">
+      {% for item in data %}
+        <div class="col-lg-3 mb-2">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{item.title}}</h5>
+              <p class="card-text">{{item.content}}</p>
+              <p class="fw-semibold">Author: {{item.author.name}}</p>
+              <div class="mb-3 d-flex gap-2 flex-wrap">
+                {% for name in item.categories.all %}
+                <span class="badge rounded-pill text-bg-success">{{name}}</span>
+                {% endfor %}
+              </div>
+              <div>
+                <button class="btn btn-warning">
+                  <a class="nav-link" href="{% url 'edit-post' item.id %}">Edit</a>
+                </button>
+                <button class="btn btn-danger">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
   </section>
 {% endblock %}
