@@ -1,6 +1,6 @@
 from django.db import models
 from categories.models import Categories
-from author.models import Author
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Post(models.Model):
@@ -8,7 +8,7 @@ class Post(models.Model):
   content = models.TextField()
   categories = models.ManyToManyField(Categories) 
   # one post has many categories and one category has many post (many to many relation)
-  author = models.ForeignKey(Author, on_delete = models.CASCADE)
+  author = models.ForeignKey(User, on_delete = models.CASCADE)
   # one author has many post but a post has one author (one to many relation)
 
   def __str__(self):

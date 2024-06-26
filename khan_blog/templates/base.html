@@ -26,32 +26,58 @@
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav m-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="{% url 'add-author' %}">Add author</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="{% url 'add-profile' %}">Add Profile</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="{% url 'add-category' %}">Add category</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="{% url 'add-post' %}">Add post</a>
-              </li>
-            </ul>
-            <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+          <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+            {% if user.is_authenticated %}
+              <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+                </li>
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{% url 'add-category' %}">Add category</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{% url 'add-post' %}">Add post</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{% url 'profile-page' %}">Profile</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Search
+                    </a>
+                    <ul style="left: -150%; width: 300px; padding: 10px" class="dropdown-menu">
+                      <li>
+                        <form class="d-flex" role="search">
+                          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                          <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form>
+                      </li>
+                    </ul>
+                  </li>        
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{% url 'logout-page' %}">Logout</a>
+                  </li>
+              </ul>
+            {% else %}
+              <div>
+                <a class="btn btn-outline-success me-3" href="{% url 'login-page' %}">Login</a>
+                <a class="btn btn-outline-info" href="{% url 'registration-page' %}">Register</a>
+              </div>
+            {% endif %}
           </div>
         </div>
       </nav>
     </header>
+
+    {% if messages %}
+      <section class="d-flex justify-content-end">
+        {% for m in messages %}
+          <div class="alert alert-{{m.tags}} mt-2 me-5" role="alert">
+            {{m}}
+          </div>  
+        {% endfor %}    
+      </section>
+    {% endif %}
     <main>
       {% block maincontent %} {% endblock %}
     </main>

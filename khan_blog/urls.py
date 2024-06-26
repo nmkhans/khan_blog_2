@@ -9,5 +9,4 @@ urlpatterns = [
     path('author/', include('author.urls')),
     path('categories/', include('categories.urls')),
     path('post/', include('post.urls')),
-    path('profiles/', include('profiles.urls')),
 ]
