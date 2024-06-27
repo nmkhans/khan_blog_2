@@ -4,6 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from post.models import Post
 
 # Create your views here.
 def user_registration(req):
@@ -84,3 +85,8 @@ def user_password_change(req):
     form = PasswordChangeForm(req.user)
 
   return render(req, 'author/user_password_change.html', {'form': form})
+
+@login_required
+def all_posts_by_user(req):
+  posts = Post.objects.filter(author = req.user)
+  return render(req, 'author/all_posts_by_user.html', {'data': posts})
