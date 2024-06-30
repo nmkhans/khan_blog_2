@@ -5,7 +5,7 @@ from .forms import PostForm
 from .models import Post
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.views.generic import CreateView, UpdateView, DeleteView
+from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
 
 # Create your views here.
 """ @login_required
@@ -72,3 +72,9 @@ class DeletePostView(DeleteView):
   template_name = 'posts/delete.html'
   pk_url_kwarg = 'id'
   success_url = reverse_lazy('all-posts-by-user')
+
+@method_decorator(login_required, name = "dispatch")
+class DetailPostView(DetailView):
+  template_name = 'posts/post_detail.html'
+  model = Post
+  pk_url_kwarg = 'id'

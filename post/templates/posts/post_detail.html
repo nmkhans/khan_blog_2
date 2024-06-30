@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %} Detail page - {{post.id}}{% endblock %}
+
+{% block maincontent %}
+  <section class="container py-5">
+    <div class="card">
+      <img src="{{post.image.url}}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">{{post.title}}</h5>
+        <p class="card-text">{{post.content}}</p>
+        <p class="fw-semibold">Author: {{post.author}}</p>
+        <div class="mb-3 d-flex gap-2 flex-wrap">
+          {% for name in post.categories.all %}
+          <span class="badge rounded-pill text-bg-success">{{name}}</span>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

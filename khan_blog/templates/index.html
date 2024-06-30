@@ -27,8 +27,11 @@
           {% for item in data %}
             <div class="col-lg-4 mb-2">
               <div class="card">
+                <img src="{{item.image.url}}" class="card-img-top" alt="...">
                 <div class="card-body">
-                  <h5 class="card-title">{{item.title}}</h5>
+                  <a class="nav-link" href="{% url 'post-detail' item.id %}">
+                    <h5 class="card-title">{{item.title}}</h5>
+                  </a>
                   <p class="card-text">{{item.content}}</p>
                   <p class="fw-semibold">Author: {{item.author}}</p>
                   <div class="mb-3 d-flex gap-2 flex-wrap">

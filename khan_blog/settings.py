@@ -4,8 +4,6 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 LOGIN_URL = '/author/user-login'
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-q5dm1i#t&oj7+^usd2=6l%l=06pd=&3lmm^v)-)3uiate3s7ul'
@@ -115,6 +113,9 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
   BASE_DIR/'khan_blog/static'
 ]
+
+MEDIA_URL = '/uploads/'
+MEDIA_ROOT = BASE_DIR/'khan_blog/uploads'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

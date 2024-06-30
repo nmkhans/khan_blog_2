@@ -10,6 +10,7 @@ class Post(models.Model):
   # one post has many categories and one category has many post (many to many relation)
   author = models.ForeignKey(User, on_delete = models.CASCADE)
   # one author has many post but a post has one author (one to many relation)
+  image = models.ImageField(upload_to='', blank = True, null = True)
 
   def __str__(self):
     return f'Title: {self.title}'
