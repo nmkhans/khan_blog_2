@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from .forms import RegistrationForm, ProfileUpdateForm
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LoginView
+from django.views.generic import CreateView
 from post.models import Post
 
 # Create your views here.
@@ -23,7 +26,7 @@ def user_registration(req):
   else:
     return redirect('profile-page')
 
-def user_login(req):
+""" def user_login(req):
   if not req.user.is_authenticated:
     if req.method == 'POST':
       form = AuthenticationForm(req, req.POST)
@@ -47,7 +50,21 @@ def user_login(req):
 
     return render(req, 'author/user_login.html', {'form': form})
   else:
-    return redirect('profile-page')
+    return redirect('profile-page') """
+  
+class UserLoginView(LoginView):
+  template_name = 'author/user_login.html'
+
+  def get_success_url(self):
+    return reverse_lazy('profile-page')
+
+  def form_valid(self, form):
+    messages.success(self.request, 'Login successfull')
+    return super().form_valid(form)
+  
+  def form_invalid(self, form):
+    messages.warning(self.request, 'Incorrect information given.')
+    return super().form_invalid(form)
   
 def user_logout(req):
   logout(req)
@@ -56,7 +73,7 @@ def user_logout(req):
 @login_required
 def user_profile(req):
   return render(req, 'author/user_profile.html', {'user': req.user})
-
+  
 @login_required
 def user_profile_update(req):
   if req.method == 'POST':
