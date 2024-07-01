@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
 {% block title %} Detail page - {{post.id}}{% endblock %}
 
@@ -16,6 +17,44 @@
           {% endfor %}
         </div>
       </div>
+    </div>
+  </section>
+  <section class="container py-5">
+    <div class="row">
+      <h3 class="text-center">All Comments</h3>
+    </div>
+    <div class="row">
+      <div class="col-12">
+       {% for comment in comments %}
+       <div class="alert alert-light mb-3" role="alert">
+          <figure>
+            <blockquote class="blockquote">
+              <p>{{comment.body}}</p>
+            </blockquote>
+            <figcaption class="blockquote-footer">
+              By {{comment.name}}
+            </figcaption>
+          </figure>
+        </div>
+
+       {% endfor %}
+      </div>
+    </div>
+  </section>
+  <section class="container py-5">
+    <div class="row">
+      <h3 class="text-center">Post a comment</h3>
+    </div>
+    <div class="row">
+      <div class="col-1"></div>
+      <div class="col-10">
+        <form method="post" class="border rounded-3 p-3">
+          {% csrf_token %}
+          {{comment_form | crispy}}
+          <button class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+      <div class="col-1"></div>
     </div>
   </section>
 {% endblock %}

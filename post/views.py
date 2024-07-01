@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.urls import reverse_lazy
-from .forms import PostForm 
+from .forms import PostForm, CommentForm 
 from .models import Post
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -78,3 +78,26 @@ class DetailPostView(DetailView):
   template_name = 'posts/post_detail.html'
   model = Post
   pk_url_kwarg = 'id'
+
+  def post(self, request, *args, **kwargs):
+    post = self.get_object()
+
+    if self.request.method == 'POST':
+      comment_form = CommentForm(self.request.POST)
+
+      if comment_form.is_valid():
+        new_comment = comment_form.save(commit=False)
+        new_comment.post = post
+        new_comment.save()
+
+    return self.get(request, *args, **kwargs)
+
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    post = self.object
+    comments = post.comments.all()
+    comment_form = CommentForm()
+
+    context['comments'] = comments
+    context['comment_form'] = comment_form
+    return context
